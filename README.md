@@ -40,6 +40,11 @@ DarkIR/
 - Skip fusion with a 1x1 conv MLP-style gate between encoder/decoder features.  
 - ~3.38M params, 7.67 GMac (@3x256x256); small overhead.
 
+## Why CSF?
+- Baseline skip connections just add encoder and decoder features; CSF learns a per-channel gate to blend them, helping when blur/noise makes shallow skips noisy.
+- In low-data training, the gate reduces over-reliance on the skip and nudges the decoder to use deeper context.
+- Cost is small (+0.06M params, +0.4 GMac @3x256x256) for a modest validation gain (+0.3 dB PSNR, lower L1); on the held-out test set, performance is similar to baseline.
+
 ## Training Setup
 - Patch 256x256 random crops, batch 4.
 - AdamW (lr 1e-4, weight_decay 1e-4, betas 0.9/0.99), cosine schedule, eta_min 1e-6.
