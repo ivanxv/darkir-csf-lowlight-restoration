@@ -1,19 +1,19 @@
-# DarkIR-CSF: Düşük Işıklı Görüntü İyileştirme için Çapraz Ölçekli Birleştirme Deneyleri
+# DarkIR-CSF: Cross-Scale Fusion Experiments for Low-Light Image Restoration
 
-Bu repo, DarkIR mimarisi üzerine hafif bir Cross-Scale Fusion (CSF) modülü ekleyerek düşük ışıkta bulanık/gürültülü görüntü iyileştirmeyi araştıran ön çalışma niteliğinde bir projedir. Amaç, az veri senaryosunda CSF bloğunun etkisini görmek ve karşılaştırmalı sonuçlar üretmek.
+This repo explores a lightweight Cross-Scale Fusion (CSF) block on top of the DarkIR architecture for low-light, noisy, and blurry image restoration. The goal is to test CSF in a data-scarce setting and compare against the DarkIR baseline.
 
-## Önemli Not (Veri ve Sonuçlar)
-- Tüm deneyler LOLBlur veri setinin küçültülmüş alt kümesiyle yapıldı: **1620 train**, **600 val**, **540 test**.
-- CSF modu validation’da PSNR/L1 tarafında iyileşme gösterirken, tamamen ayrılmış test setinde orijinal DarkIR biraz daha iyi genelleme yaptı.
-- Sonuçlar keşif niteliğinde; nihai SoTA iddiası yoktur.
+## Important Note (Data and Results)
+- All experiments use a reduced LOLBlur subset: **1620 train**, **600 val**, **540 test** pairs.
+- CSF improved validation PSNR/L1; on the held-out test set the vanilla DarkIR generalized slightly better.
+- Results are exploratory; no SOTA claim.
 
-## Proje Özeti
-- Orijinal DarkIR’i yeniden uyguladım, LOLBlur alt kümesiyle eğittim.
-- Encoder–decoder skip bağlantılarına hafif bir CSF bloğu ekledim.
-- DarkIR (baseline) vs. DarkIR + CSF: PSNR, SSIM, LPIPS, parametre ve FLOP maliyeti kıyaslandı.
-- Amaç: az veriyle model tasarım/eğitim/değerlendirme pratiği ve portföy için bir demo proje.
+## Project Summary
+- Re-implemented DarkIR and trained on the LOLBlur subset.
+- Added a CSF block on encoder-decoder skips.
+- Compared DarkIR vs. DarkIR + CSF on PSNR, SSIM, LPIPS, params, and FLOPs.
+- Aim: hands-on model design/training/evaluation with limited data plus a portfolio-ready demo.
 
-## Dizin Yapısı (özet)
+## Repo Layout (abridged)
 ```
 DarkIR/
   train.py, testing.py, inference.py, inference_video.py
@@ -21,76 +21,76 @@ DarkIR/
   options/
     train/ LOLBlur.yml, LOLBlur_csf.yml
     test/  LOLBlur.yml, LOLBlur_CSF.yml
-  data/datasets/LOLBlur/ (train, train_val, test)   # veri buraya konur
+  data/datasets/LOLBlur/ (train, train_val, test)   # place data here
   models/ DarkIR_lolblur_original_best.pt, DarkIR_lolblur_best.pt, ...
 ```
-`options/train` ve `options/test` içindeki yml dosyaları yol ve hiperparametre referanslarını içerir.
+`options/train` and `options/test` hold paths and hyperparameters.
 
-## Veri Seti
-- Veri: LOLBlur (düşük ışık + blur/gürültü giriş, temiz hedef).
-- Bölünüm: train 1620, val 600, test 540 çift. Test seti yalnızca final değerlendirme için.
-- Telif/boyut nedeniyle veri repo içinde yok; resmi kaynaktan indirip `data/datasets/LOLBlur/` altına yerleştirin.
+## Dataset
+- LOLBlur pairs: low-light + blur/noise input, clean target.
+- Split used: train 1620, val 600, test 540 pairs. Test is held out for final reporting.
+- Data is not stored in the repo; download from the official source and place under `data/datasets/LOLBlur/`.
 
-## Yöntem
+## Method
 **DarkIR (baseline)**  
-- Encoder–decoder, depth-wise + dilated konvolüsyonlar.  
-- ~3.32M parametre, 7.25 GMac (@3x256x256).
+- Encoder-decoder with depth-wise + dilated convolutions.  
+- ~3.32M params, 7.25 GMac (@3x256x256).
 
 **DarkIR + CSF**  
-- Skip bağlantılarında encoder/decoder özelliklerini 1x1 konv MLP ile ağırlıklı birleştiriyor.  
-- ~3.38M parametre, 7.67 GMac (@3x256x256); ek maliyet küçük.
+- Skip fusion with a 1x1 conv MLP-style gate between encoder/decoder features.  
+- ~3.38M params, 7.67 GMac (@3x256x256); small overhead.
 
-## Eğitim Ayarları
-- Patch: 256x256 random crop, batch 4.
-- Optim: AdamW (lr 1e-4, weight_decay 1e-4, betas 0.9/0.99), CosineAnnealing, eta_min 1e-6.
-- Grad clip: 5.0, loss: Charbonnier.
-- Augment: yatay/dikey çevirme.
-- 100 epoch, CUDA varsa mixed precision opsiyonel.
-- Donanım: yerel GPU veya Colab T4; kısıtlı VRAM yüzünden veri alt kümesi kullanıldı.
+## Training Setup
+- Patch 256x256 random crops, batch 4.
+- AdamW (lr 1e-4, weight_decay 1e-4, betas 0.9/0.99), cosine schedule, eta_min 1e-6.
+- Grad clip 5.0; loss: Charbonnier.
+- Augment: horizontal/vertical flip.
+- 100 epochs; mixed precision optional if CUDA is available.
+- Hardware: local GPU or Colab T4; subset used due to VRAM limits.
 
-## Eğitimi Çalıştırma
+## Train
 ```
-# Orijinal DarkIR
+# Baseline
 python train.py -p ./options/train/LOLBlur.yml
 
-# CSF’li DarkIR
+# CSF variant
 python train.py -p ./options/train/LOLBlur_csf.yml   # use_csf: true
 ```
-`options/train/*` içinde yol ve model isimlerini kendi ortamına göre güncelle.
+Adjust paths/model names in `options/train/*` for your setup.
 
 ## Test
 ```
-# CSF açık test
+# CSF on LOLBlur
 python testing.py -p ./options/test/LOLBlur_CSF.yml
 
-# Orijinal model testi (use_csf: false, doğru checkpoint yolu)
+# Baseline (set use_csf false and correct checkpoint path)
 python testing.py -p ./options/test/LOLBlur.yml
 ```
-- Metrikler konsola yazılır.
-- İlk 8 örnek görseli `save.results_dir` (varsayılan `./images/results_test`) altına kaydeder.
-- Unpaired test: `python testing_unpaired.py -p ./options/test/RealBlur_Night.yml`
+- Metrics print to console.
+- First 8 samples save to `save.results_dir` (default `./images/results_test`).
+- Unpaired: `python testing_unpaired.py -p ./options/test/RealBlur_Night.yml`
 
-## İnference (görsel kaydetme)
+## Inference (saves images)
 ```
 python inference.py -p ./options/inference/LOLBlur.yml -i ./path/to/images
-# Çıktılar: ./images/results
+# outputs: ./images/results
 
 python inference_video.py -p ./options/inference_video/Baseline.yml -i /path/to/video.mp4
-# Çıktı video: ./videos/results
+# outputs: ./videos/results
 ```
-Config’teki checkpoint yolu ve `use_csf` bayrağını eğittiğin modele göre ayarla.
+Match checkpoint path and `use_csf` flag to the model you trained.
 
-## Sonuçlar (özet)
-- Validation (600 çift):
+## Results (summary)
+- Validation (600 pairs):
   - DarkIR: PSNR ~23.97, SSIM ~0.808, L1 ~0.0540 (epoch ~60)
   - DarkIR + CSF: PSNR ~24.32, SSIM ~0.797, L1 ~0.0478 (epoch ~20)
-- Test (540 çift):
+- Test (540 pairs):
   - DarkIR: PSNR 22.25, SSIM 0.6928, LPIPS 0.3858
   - DarkIR + CSF: PSNR 22.70, SSIM 0.7185, LPIPS 0.3641
-- Yorum: CSF validation’da kazanç sağlarken testte orijinal DarkIR daha iyi genelledi. Daha fazla veri/regularization/CSF tasarımı ile fark kapanabilir.
+- Takeaway: CSF helped on val; vanilla DarkIR edged ahead on test. More data/regularization/CSF design may close the gap.
 
-## Nitel Sonuçlar
-- Testten seçilen input/gt/output örneklerini `images/results_test` (veya ayarladığınız `results_dir`) altında bulabilirsiniz. Aşağıda CSF modeli ile üretilmiş birkaç örnek yer alıyor.
+## Qualitative Examples
+- Example input/gt/output triplets are in `images/results_test` (or your `results_dir`). Below are CSF outputs.
 
 | Input | Ground Truth | CSF Output |
 | --- | --- | --- |
@@ -98,21 +98,6 @@ Config’teki checkpoint yolu ve `use_csf` bayrağını eğittiğin modele göre
 | ![](images/results_test/00001_input.png) | ![](images/results_test/00001_gt.png) | ![](images/results_test/00001_output.png) |
 | ![](images/results_test/00002_input.png) | ![](images/results_test/00002_gt.png) | ![](images/results_test/00002_output.png) |
 
-## Sınırlılıklar ve Gelecek Çalışmalar
-- Küçük veri alt kümesi, tek veri seti (LOLBlur).
-- CSF bloğu basit; optimum iddiası yok.
-- Gelecek işler: tam veriyle eğitim, farklı LLIE setleri, ek regularization (perceptual/TV), farklı CSF varyantları, çoklu görev denemeleri.
-
-## Hızlı Kullanım Özeti
-```
-# Eğitim
-python train.py -p ./options/train/LOLBlur.yml
-python train.py -p ./options/train/LOLBlur_csf.yml
-
-# Test (metrik + örnek görsel)
-python testing.py -p ./options/test/LOLBlur.yml        # use_csf ve checkpoint yolunu ayarla
-python testing.py -p ./options/test/LOLBlur_CSF.yml
-
-# İnference
-python inference.py -p ./options/inference/LOLBlur.yml -i ./path/to/your/images
-```
+## Limitations and Next Steps
+- Small subset and single dataset (LOLBlur).
+- Future work: full LOLBlur training, other LLIE datasets, extra regularization (perceptual/TV), additional CSF variants, multi-task training.
