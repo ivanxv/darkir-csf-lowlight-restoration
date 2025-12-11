@@ -21,11 +21,11 @@ network:
   dec_blk_nums: [3, 1, 1]
   dilations: [1, 4, 9]
   extra_depth_wise: True
-  use_csf: False            # match training config
+  use_csf: true            # match training config
   csf_reduction: 4
 
 #### model weights
 save:
-  path: ./models/DarkIR_lolblur_original_best.pt   # trained locally
+  path: ./models/DarkIR_lolblur_best.pt   # trained locally
 
 Resize: False
