@@ -90,7 +90,13 @@ Config’teki checkpoint yolu ve `use_csf` bayrağını eğittiğin modele göre
 - Yorum: CSF validation’da kazanç sağlarken testte orijinal DarkIR daha iyi genelledi. Daha fazla veri/regularization/CSF tasarımı ile fark kapanabilir.
 
 ## Nitel Sonuçlar
-- Testten seçilen input/gt/output örneklerini `images/results_test` (veya ayarladığınız `results_dir`) altında bulabilirsiniz. DarkIR vs. CSF görsel karşılaştırmaları buraya eklenebilir.
+- Testten seçilen input/gt/output örneklerini `images/results_test` (veya ayarladığınız `results_dir`) altında bulabilirsiniz. Aşağıda CSF modeli ile üretilmiş birkaç örnek yer alıyor.
+
+| Input | Ground Truth | CSF Output |
+| --- | --- | --- |
+| ![](images/results_test/00000_input.png) | ![](images/results_test/00000_gt.png) | ![](images/results_test/00000_output.png) |
+| ![](images/results_test/00001_input.png) | ![](images/results_test/00001_gt.png) | ![](images/results_test/00001_output.png) |
+| ![](images/results_test/00002_input.png) | ![](images/results_test/00002_gt.png) | ![](images/results_test/00002_output.png) |
 
 ## Sınırlılıklar ve Gelecek Çalışmalar
 - Küçük veri alt kümesi, tek veri seti (LOLBlur).
